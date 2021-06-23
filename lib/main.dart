@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       body: Center(
         child: CustomPaint(
-          painter: SpritePainter(_animation.value),
+          painter: MyCustomPainter(_animation.value),
           child: Container(),
         ),
       ),
@@ -68,18 +68,10 @@ class _HomePageState extends State<HomePage>
   }
 }
 
-class SpritePainter extends CustomPainter {
+class MyCustomPainter extends CustomPainter {
   final double animationValue;
 
-  SpritePainter(this.animationValue);
-
-  void circle(Canvas canvas, Rect rect, double value) {
-    Paint paint = Paint()
-      ..color = Color(0xff19DC7C).withOpacity((1.0 - (value / 4)).clamp(.0, 1));
-
-    canvas.drawCircle(rect.center,
-        sqrt((rect.width * .5 * rect.width * .5) * value / 4), paint);
-  }
+  MyCustomPainter(this.animationValue);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -89,8 +81,16 @@ class SpritePainter extends CustomPainter {
     }
   }
 
+  void circle(Canvas canvas, Rect rect, double value) {
+    Paint paint = Paint()
+      ..color = Color(0xff19DC7C).withOpacity((1 - (value / 4)).clamp(.0, 1));
+
+    canvas.drawCircle(rect.center,
+        sqrt((rect.width * .5 * rect.width * .5) * value / 4), paint);
+  }
+
   @override
-  bool shouldRepaint(SpritePainter oldDelegate) {
+  bool shouldRepaint(MyCustomPainter oldDelegate) {
     return true;
   }
 }
